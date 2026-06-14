@@ -29,7 +29,7 @@ public class ServicoControle {
     @Autowired
     private ServicoModelador modelador;
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
     @GetMapping
     public ResponseEntity<CollectionModel<ServicoExibirDTO>> obterTodos() {
         List<ServicoExibirDTO> servicos = servico.buscarTodos();
@@ -40,21 +40,21 @@ public class ServicoControle {
                 linkTo(methodOn(ServicoControle.class).obterTodos()).withSelfRel()));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
     @GetMapping("/{id}")
     public ResponseEntity<ServicoExibirDTO> obterPorId(@PathVariable Long id) {
         ServicoExibirDTO dto = servico.buscarPorIdDTO(id);
         return ResponseEntity.ok(modelador.toModel(dto));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
     @PostMapping
     public ResponseEntity<ServicoExibirDTO> cadastrar(@Valid @RequestBody ServicoCadastrarDTO dto) {
         ServicoExibirDTO criado = servico.cadastrar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(modelador.toModel(criado));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
     @PutMapping("/{id}")
     public ResponseEntity<Void> atualizar(@PathVariable Long id, @Valid @RequestBody ServicoAtualizadorDTO dto) {
         dto.setId(id);
@@ -62,7 +62,7 @@ public class ServicoControle {
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         servico.excluir(id);

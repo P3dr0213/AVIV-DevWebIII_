@@ -19,7 +19,7 @@ import com.autobots.automanager.servicos.TelefoneServico;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-@PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+@PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
 @RestController
 @RequestMapping("/telefones")
 public class TelefoneControle {

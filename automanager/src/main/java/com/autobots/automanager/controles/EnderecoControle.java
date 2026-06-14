@@ -19,7 +19,7 @@ import com.autobots.automanager.servicos.EnderecoServico;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-@PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+@PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
 @RestController
 @RequestMapping("/enderecos")
 public class EnderecoControle {

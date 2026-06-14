@@ -19,7 +19,7 @@ import com.autobots.automanager.modeladores.EmailModelador;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-@PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+@PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
 @RestController
 @RequestMapping("/emails")
 public class EmailControle {

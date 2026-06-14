@@ -30,14 +30,14 @@ public class ClienteControle {
     @Autowired
     private ClienteModelador modelador;
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
     @PostMapping
     public ResponseEntity<ClienteExibirDTO> criar(@Valid @RequestBody ClienteCadastrarDTO dto) {
         ClienteExibirDTO clienteCriado = servico.cadastrarViaDTO(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(modelador.toModel(clienteCriado));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
     @GetMapping
     public ResponseEntity<CollectionModel<ClienteExibirDTO>> listar() {
         List<ClienteExibirDTO> clientes = servico.buscarTodos();
@@ -49,14 +49,14 @@ public class ClienteControle {
                 linkTo(methodOn(ClienteControle.class).listar()).withSelfRel()));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR', 'CLIENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR', 'ROLE_CLIENTE')")
     @GetMapping("/{id}")
     public ResponseEntity<ClienteExibirDTO> obterPorId(@PathVariable Long id) {
         ClienteExibirDTO cliente = servico.buscarPorIdDTO(id);
         return ResponseEntity.ok(modelador.toModel(cliente));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
     @PutMapping("/{id}")
     public ResponseEntity<ClienteExibirDTO> editar(@PathVariable Long id, @Valid @RequestBody ClienteAtualizadorDTO dto) {
         dto.setId(id);
@@ -65,7 +65,7 @@ public class ClienteControle {
         return ResponseEntity.ok(modelador.toModel(atualizado));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         servico.excluir(id);

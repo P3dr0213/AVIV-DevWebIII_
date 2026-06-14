@@ -29,7 +29,7 @@ public class UsuarioControle {
     @Autowired
     private UsuarioModelador modelador;
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
     @GetMapping
     public ResponseEntity<CollectionModel<UsuarioExibirDTO>> obterTodos() {
         List<UsuarioExibirDTO> usuarios = servico.buscarTodos();
@@ -40,21 +40,21 @@ public class UsuarioControle {
                 linkTo(methodOn(UsuarioControle.class).obterTodos()).withSelfRel()));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR', 'CLIENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR', 'ROLE_CLIENTE')")
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioExibirDTO> obterPorId(@PathVariable Long id) {
         UsuarioExibirDTO dto = servico.buscarPorIdDTO(id);
         return ResponseEntity.ok(modelador.toModel(dto));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
     @PostMapping
     public ResponseEntity<UsuarioExibirDTO> cadastrar(@Valid @RequestBody UsuarioCadastrarDTO dto) {
         UsuarioExibirDTO criado = servico.cadastrar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(modelador.toModel(criado));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
     @PutMapping("/{id}")
     public ResponseEntity<Void> atualizar(@PathVariable Long id, @Valid @RequestBody UsuarioAtualizadorDTO dto) {
         dto.setId(id);
@@ -62,14 +62,14 @@ public class UsuarioControle {
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         servico.excluir(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
     @PutMapping("/{usuarioId}/mercadorias/{mercadoriaId}")
     public ResponseEntity<UsuarioExibirDTO> vincularMercadoria(
             @PathVariable Long usuarioId,

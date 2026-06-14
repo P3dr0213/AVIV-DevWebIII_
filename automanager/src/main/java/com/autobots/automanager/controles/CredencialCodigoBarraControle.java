@@ -19,7 +19,7 @@ import com.autobots.automanager.modeladores.CredencialCodigoBarraModelador;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-@PreAuthorize("hasRole('ADMINISTRADOR')")
+@PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
 @RestController
 @RequestMapping("/credenciais-codigo-barra")
 public class CredencialCodigoBarraControle {

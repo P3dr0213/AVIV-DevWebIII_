@@ -29,7 +29,7 @@ public class MercadoriaControle {
     @Autowired
     private MercadoriaModelador modelador;
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
     @GetMapping
     public ResponseEntity<CollectionModel<MercadoriaExibirDTO>> obterTodos() {
         List<MercadoriaExibirDTO> mercadorias = servico.buscarTodos();
@@ -40,21 +40,21 @@ public class MercadoriaControle {
                 linkTo(methodOn(MercadoriaControle.class).obterTodos()).withSelfRel()));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
     @GetMapping("/{id}")
     public ResponseEntity<MercadoriaExibirDTO> obterPorId(@PathVariable Long id) {
         MercadoriaExibirDTO dto = servico.buscarPorIdDTO(id);
         return ResponseEntity.ok(modelador.toModel(dto));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
     @PostMapping
     public ResponseEntity<MercadoriaExibirDTO> cadastrar(@Valid @RequestBody MercadoriaCadastrarDTO dto) {
         MercadoriaExibirDTO criado = servico.cadastrar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(modelador.toModel(criado));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
     @PutMapping("/{id}")
     public ResponseEntity<Void> atualizar(@PathVariable Long id, @Valid @RequestBody MercadoriaAtualizadorDTO dto) {
         dto.setId(id);
@@ -62,7 +62,7 @@ public class MercadoriaControle {
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         servico.excluir(id);

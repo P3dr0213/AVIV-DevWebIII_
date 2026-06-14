@@ -19,7 +19,7 @@ import com.autobots.automanager.modeladores.EmpresaModelador;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-@PreAuthorize("hasRole('ADMINISTRADOR')")
+@PreAuthorize("hasRole('ROLE_ADMINISTRADOR')")
 @RestController
 @RequestMapping("/empresas")
 public class EmpresaControle {

@@ -29,7 +29,7 @@ public class VeiculoControle {
     @Autowired
     private VeiculoModelador modelador;
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR')")
     @GetMapping
     public ResponseEntity<CollectionModel<VeiculoExibirDTO>> obterTodos() {
         List<VeiculoExibirDTO> veiculos = servico.buscarTodos();
@@ -40,21 +40,21 @@ public class VeiculoControle {
                 linkTo(methodOn(VeiculoControle.class).obterTodos()).withSelfRel()));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE', 'VENDEDOR', 'CLIENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE', 'ROLE_VENDEDOR', 'ROLE_CLIENTE')")
     @GetMapping("/{id}")
     public ResponseEntity<VeiculoExibirDTO> obterPorId(@PathVariable Long id) {
         VeiculoExibirDTO dto = servico.buscarPorIdDTO(id);
         return ResponseEntity.ok(modelador.toModel(dto));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
     @PostMapping
     public ResponseEntity<VeiculoExibirDTO> cadastrar(@Valid @RequestBody VeiculoCadastrarDTO dto) {
         VeiculoExibirDTO criado = servico.cadastrar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(modelador.toModel(criado));
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
     @PutMapping("/{id}")
     public ResponseEntity<Void> atualizar(@PathVariable Long id, @Valid @RequestBody VeiculoAtualizadorDTO dto) {
         dto.setId(id);
@@ -62,7 +62,7 @@ public class VeiculoControle {
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("hasAnyRole('ADMINISTRADOR', 'GERENTE')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRADOR', 'ROLE_GERENTE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         servico.excluir(id);
